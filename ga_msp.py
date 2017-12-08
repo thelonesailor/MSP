@@ -2,34 +2,53 @@ from random import randint,shuffle
 from sys import stdin, stdout
 from heapq import heappush,heappop
 
-
-N=300#population size, assumed even
-maxiterations=100
+N=200#population size, assumed even
+maxiterations=300
 prob_crossover=1.0
 prob_mutation=0.05
 cmax=0
 maxheight=0
 beststring=[]
 n,m,p = map(int,stdin.readline().split())
-h=[-1 for i in range(0,n)]
-h_=[-1 for i in range(0,n)]
+h=[-1 for i in range(n)]
+h_=[-1 for i in range(n)]
 
 time=list(map(int,stdin.readline().split()))
 
-succ=[[] for i in range(0,n)]
-pred=[[] for i in range(0,n)]
-print("arrays declared")
+succ=[[] for i in range(n)]
+pred=[[] for i in range(n)]
+graph=[[0 for j in range(n)] for i in range(n)]
+# print("arrays declared")
 
 #tasks,edges,processors
 def main():
-	for i in range(0,m):
+
+	for i in range(m):
 		u,v = map(int,stdin.readline().split())
 		# u->v
-		succ[u].append(v)
-		pred[v].append(u)
+		graph[u][v]=1
+
+	for k in range(n):
+		for i in range(n):
+			for j in range(n):
+				if graph[i][k] and graph[k][j] :
+					graph[i][j]=1
 
 
-	for i in range(0,n):
+	for i in range(n):
+		for j in range(n):
+			if graph[i][j] :
+				for k in range(n):
+					if graph[j][k]:
+						graph[i][k]=0
+
+	for i in range(n):
+		for j in range(n):
+			if graph[i][j]:
+				succ[i].append(j)
+				pred[j].append(i)
+
+	for i in range(n):
 		height(i)
 		if(h[i]==-1):
 			print("Something Wrong for h["+str(i)+"]  2")
@@ -43,13 +62,12 @@ def main():
 	# print(h_)
 
 	find_schedule()
-	# S=[[0, 14], [30, 31, 35, 3, 13], [4, 2, 7, 9, 15, 16, 19, 23, 34, 36, 38], [1, 5, 6, 8, 10, 12, 17, 11, 24], [18, 21, 22, 25, 26, 27, 28, 20, 29, 32, 33, 37, 39]]
-	# print(compute_FT(S))
+
 
 def find_schedule():
 
 	pop=[]
-	for i in range(0,N):
+	for i in range(N):
 		#print("generating "+str(i))
 		temp=generate_schedule()
 		# print(temp)
@@ -64,7 +82,7 @@ def find_schedule():
 	for i in range(0,maxiterations):
 
 		ft=[]
-		assert N==len(pop)
+		# assert N==len(pop)
 		fmin=1000000000
 		for j in range(0,len(pop)):
 			# print(j)
@@ -86,13 +104,13 @@ def find_schedule():
 				minf=fitness[j]
 				minj=j
 
-		assert minj>-1
+		# assert minj>-1
 
 		if(len(bbs)>0):
 			pop[minj]=list(bbs)
 
 		npop=len(pop)
-		assert N==npop
+		# assert N==npop
 
 		newpop,beststring=Reproduction(pop,fitness,nsum)
 
@@ -114,16 +132,22 @@ def find_schedule():
 			bbs=beststring
 		check(beststring)
 
-	print(compute_FT(bbs))
-	print("Best string ="+str(bbs))
+	temp=compute_FT(bbs)	
+	fd=open("result.txt",'a')	
+	fd.write(str(temp)+",")
+	fd.close()
+
+	print(temp)
+	# for a in bbs:
+	# 	print(a)
 
 
 def check(S):
-	a=[0 for i in range(0,n)]
-	for i in range(0,p):
+	a=[0 for i in range(n)]
+	for i in range(p):
 		l=len(S[i])
 
-		for j in range(0,l):
+		for j in range(l):
 			a[S[i][j]]+=1
 
 
@@ -131,7 +155,7 @@ def check(S):
 			if(h_[S[i][j]]<h_[S[i][j-1]]):
 				print("Wr")
 
-	for i in range(0,n):
+	for i in range(n):
 		if(a[i]<1):
 			print(i)
 			print(S)
@@ -150,18 +174,18 @@ def mutation(A,prob):
 	r=randint(0,n-1)
 	ri=0
 	rj=0
-	for i in range(0,p):
+	for i in range(p):
 		l=len(newA[i])
-		for j in range(0,l):
+		for j in range(l):
 			if(newA[i][j]==r):
 				ri=i
 				rj=j
 				break
 
 	f=0
-	for i in range(0,p):
+	for i in range(p):
 		l=len(newA[i])
-		for j in range(0,l):
+		for j in range(l):
 			if(h_[newA[i][j]]==h_[r] and newA[i][j]!=r):
 				f=1
 				# swap(A[i][j],A[ri][rj])
@@ -184,17 +208,17 @@ def crossover(A,B,prob):
 	if(float(c)/maxheight>prob):#do only with probability prob
 		return A,B
 
-	newA=[[] for i in range(0,p)]
-	newB=[[] for i in range(0,p)]
-	for i in range(0,p):
+	newA=[[] for i in range(p)]
+	newB=[[] for i in range(p)]
+	for i in range(p):
 		Aj=len(A[i])
-		for j in range(0,len(A[i])):
+		for j in range(len(A[i])):
 			if(h_[A[i][j]]>c):
 				Aj=j
 				break
 
 		Bj=len(B[i])
-		for j in range(0,len(B[i])):
+		for j in range(len(B[i])):
 			if(h_[B[i][j]]>c):
 				Bj=j
 				break
@@ -227,7 +251,7 @@ def Reproduction(pop,fitness,nsum):
 	for i in range(1,npop):
 		r=randint(1,nsum)
 		temp=0
-		for j in range(0,N):
+		for j in range(N):
 			temp+=fitness[j]
 			if(r<=temp):
 				newpop.append(pop[j])
@@ -235,7 +259,7 @@ def Reproduction(pop,fitness,nsum):
 
 	maxj=-1
 	f=0
-	for j in range(0,N):
+	for j in range(N):
 		if(fitness[j]>f):
 			f=fitness[j]
 			maxj=j
@@ -263,7 +287,7 @@ def compute_FT(S):
 
 	for ls in S:
 		l=len(ls)
-		for j in range(0,l):
+		for j in range(l):
 			stack.append(ls[j])
 		
 	prv=[-1 for i in range(n)]
@@ -311,7 +335,7 @@ def initialise_h_():
 	global maxheight,h_
 
 	maxheight=0
-	for i in range(0,n):
+	for i in range(n):
 
 		maxh=-1
 		for t in pred[i]:
@@ -336,14 +360,14 @@ def generate_schedule():
 	global h_,p,maxheight
 
 
-	G=[set() for i in range(0,maxheight+1)]
+	G=[set() for i in range(maxheight+1)]
 	for i in range(0,n):
 		G[h_[i]].add(i)
 
-	S=[[] for i in range(0,p)]
-	np=[i for i in range(0,p)]
+	S=[[] for i in range(p)]
+	np=[i for i in range(p)]
 	shuffle(np)
-	for i in range(0,p-1):#for first p-1 processors
+	for i in range(p-1):#for first p-1 processors
 		for he in range(0,maxheight+1):
 			if(len(G[he])>0):
 				r=randint(0,len(G[he]))

@@ -1,3 +1,3 @@
 n e p
 n numbers denoting time of tasks
-e line containing u v denoting edge from u to v
+e lines containing u v each denoting edge from u to v

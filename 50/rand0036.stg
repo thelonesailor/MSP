@@ -1,0 +1,74 @@
+         50
+          0          0          0
+          1          6          1          0
+          2         20          1          0
+          3          7          1          0
+          4         18          1          0
+          5          7          1          0
+          6         14          1          0
+          7          2          1          0
+          8          9          1          0
+          9         16          1          0
+         10         14          1          0
+         11          3          1          0
+         12          7          1          0
+         13         15          1          0
+         14         18          1          0
+         15          7          1          0
+         16         16          1          0
+         17         15          1          0
+         18         13          4          2          7          8         10
+         19         10          3          4          9         10
+         20          4          1          9
+         21         20          2         12         15
+         22          8          3          3          7         13
+         23          9          3          5          8         12
+         24         13          1          0
+         25          1          2          8         13
+         26          5          4          4          5         11         16
+         27         14          2          9         10
+         28         17          3          3          9         21
+         29          1          1         16
+         30          8          3          7         16         27
+         31         17          4          4          6         10         25
+         32         13          4         11         13         14         24
+         33          3          8          1          5          7          8         14         17         24         26
+         34         19          5          7         18         23         26         27
+         35          3          3          1          2         22
+         36          9          5          4          5          9         23         27
+         37          1          5         10         13         18         19         27
+         38         10          8          2          3          9         14         20         21         25         31
+         39          5          5          8         12         19         28         33
+         40         10         11          1          6          9         10         11         19         21         25         31         32         33
+         41          5          6          1          6         14         25         36         37
+         42         15          6         11         17         23         29         34         37
+         43         13          5          2         10         26         27         35
+         44          4          5         11         18         32         35         36
+         45         17          5         10         12         24         26         30
+         46          9          7          8         17         22         30         31         37         44
+         47         16          5          5         17         19         30         36
+         48         17          6         12         19         28         30         43         44
+         49         16          4          5         26         29         44
+         50          9          3         11         26         30
+         51          0         11         38         39         40         41         42         45         46         47         48         49         50
+# Standard Task Graph Set Project
+# Random Task Graph 50//tmp/50/rand0036.stg
+# Precedence constraints generator : layrprob
+#   Random Seed       : 28801
+#   Tasks             : 50 (+dummy tasks : 2)
+#   Layers            : 5
+#   Max. Layer Width  : 16
+#   Min. Layer Width  : 5
+#   Ave. Layer Width  : 10.000000
+#   Edges             : 141 / 967 (+dummy edges : 29)
+#   Max. Predecessors : 11
+#   Min. Predecessors : 0
+#   Ave. Predecessors : 2.820000
+#   Probability       : 0.140872 (Real : 0.145812)
+# Task processing time generator : unifproc
+#   Random Seed       : 28800
+#   Max. Proc. Time   : 20
+#   Min. Proc. Time   : 1
+#   Ave. Proc. Time   : 10.000000 (Real : 10.560000)
+# CP Length           : 67
+# Parallelism         : 7.880597

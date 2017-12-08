@@ -3,16 +3,12 @@ from random import shuffle
 from heapq import heappush,heappop,heapify
 cin = sys.stdin
 cout = sys.stdout
+
 def find_schedule(graph,p,ls):
 	schedule = [[] for i in xrange(p)]
-	child = graph[0]
-	parent = graph[1]
-	n = len(time)
-	# ls = [(time[i],i) for i in xrange(n)]
-	# ls.sort(key=lambda x:x[0],reverse=True)
-
-	# ls = [elem[1] for elem in ls]
-	
+	child = succ
+	parent = pred
+	n = len(time)	
 		
 	done = [False]*n
 	end_time = [-1]*n
@@ -46,16 +42,19 @@ def find_schedule(graph,p,ls):
 			tmp = []
 			while heap and heap[0][0]==tproc:
 				tmp.append(heappop(heap))
-			new_time = heap[0][0]
-			# new_time = tproc+1
+			if(heap):	
+				new_time = heap[0][0]
+			else:	
+				new_time = tproc+1
 			while tmp:
 				heappush(heap,(new_time,(tmp.pop())[1]))
+			heappush(heap,(new_time,proc))
+				
 	mtime = max(elem[0] for elem in heap)
 	return schedule,mtime
 
 def finish_time(graph,schedule,time):
-	n = len(graph[0])
-	parent = graph[1]
+	
 	pos = [(-1,-1) for i in xrange(n)]
 	for i in xrange(len(schedule)) :
 		for j in xrange(len(schedule[i])) :
@@ -94,47 +93,68 @@ def sanity_check(schedule,num_tasks):
 
 num_tasks,num_edges,num_proc, = map(int,cin.readline().split(' '))
 time = map(int,cin.readline().split(' '))
-graph = [[] for i in xrange(num_tasks)],[[] for i in xrange(num_tasks)]
-for i in xrange(num_edges):
-	a,b = map(int,cin.readline().split(' '))
-	graph[0][a].append(b)
-	graph[1][b].append(a)
 
 n=len(time)
 assert n==num_tasks
 
-h=[-1 for i in range(0,n)]
-pred=graph[1]
-succ=graph[0]
+graph=[[0 for j in xrange(n)] for i in xrange(n)]
+pred = [[] for i in xrange(n)]
+succ = [[] for i in xrange(n)]
+for i in xrange(num_edges):
+	a,b = map(int,cin.readline().split(' '))
+	graph[a][b]=1
 
 
-def height(t):
-	global h
-	if(h[t]>-1):
-		return h[t]
+for k in range(n):
+	for i in range(n):
+		for j in range(n):
+			if graph[i][k] and graph[k][j] :
+				graph[i][j]=1
 
-	if(pred[t]==[]):
-		h[t]=0
-	else:
-		maxh=-1
-		for a in pred[t]:
-			temp=height(a)
-			if(temp>maxh):
-				maxh=temp
 
-		if(maxh==-1):
-			print("something is wrong 1")
+for i in range(n):
+	for j in range(n):
+		if graph[i][j] :
+			for k in range(n):
+				if graph[j][k]:
+					graph[i][k]=0
 
-		h[t]=maxh+1
+for i in range(n):
+	for j in range(n):
+		if graph[i][j]:
+			succ[i].append(j)
+			pred[j].append(i)
 
-	return h[t]
+parent=pred
+child=succ
 
-for i in range(0,n):
-	height(i)
-	if(h[i]==-1):
-		print("Something Wrong for h["+str(i)+"]  2")
+# h=[-1 for i in xrange(n)]
+# def height(t):
+# 	global h
+# 	if(h[t]>-1):
+# 		return h[t]
 
-# num_proc=3
+# 	if(pred[t]==[]):
+# 		h[t]=0
+# 	else:
+# 		maxh=-1
+# 		for a in pred[t]:
+# 			temp=height(a)
+# 			if(temp>maxh):
+# 				maxh=temp
+
+# 		if(maxh==-1):
+# 			print("something is wrong 1")
+
+# 		h[t]=maxh+1
+
+# 	return h[t]
+
+# for i in range(0,n):
+# 	height(i)
+# 	if(h[i]==-1):
+# 		print("Something Wrong for h["+str(i)+"]  2")
+
 
 ls = [(time[i],i) for i in xrange(n)]
 ls.sort(key=lambda x:x[0],reverse=False)	
@@ -148,7 +168,8 @@ sanity_check(schedule,num_tasks)
 print "Increasing order of time"
 # for proc in schedule:
 # 	print [task for task in proc]
-print finish_time(graph,schedule,time),result[1]
+assert finish_time(graph,schedule,time)==result[1] 
+print result[1]
 
 
 ls = [(time[i],i) for i in xrange(n)]
@@ -160,10 +181,11 @@ ls=ls2
 result = find_schedule(graph,num_proc,ls)
 schedule = result[0]
 sanity_check(schedule,num_tasks)
-print "Decreasing order of time"	
+print "Decreasing order of time:"	
 # for proc in schedule:
 	# print [task for task in proc]
-print finish_time(graph,schedule,time),result[1]
+assert finish_time(graph,schedule,time)==result[1]
+print result[1]
 
 
 
@@ -174,44 +196,47 @@ worstschedule=schedule
 worsttime=result[1]
 
 # try some random permutations
-for i in xrange(10000):
-	ls = [i for i in xrange(n)]
+lim=40*n
+ls = [i for i in xrange(n)]
+shuffle(ls)
+for i in xrange(lim):
 	shuffle(ls)
-	shuffle(ls)
-
 	# print(ls)	
 	result = find_schedule(graph,num_proc,ls)
 	schedule = result[0]
 	sanity_check(schedule,num_tasks)
 	# for proc in schedule:
 	# 	print [task for task in proc]
-	temp=finish_time(graph,schedule,time)
+	# temp=finish_time(graph,schedule,time)
 	# print(temp)
-	assert temp==result[1]
+	# assert temp==result[1]
 	# print temp,result[1]
 	if(result[1]<besttime):
 		besttime=result[1]
 		bestschedule=schedule
 
-	if(result[1]>worsttime):
-		worsttime=result[1]
-		worstschedule=schedule
+	# if(result[1]>worsttime):
+	# 	worsttime=result[1]
+	# 	worstschedule=schedule
 
-print("Result of random permutations")
+print("Result of random permutations:")
 # for proc in bestschedule:
 # 	print [task for task in proc]
-print "Best="+str(besttime)
+print "\tBest="+str(besttime)
+
+fd=open("result.txt",'a')	
+fd.write(str(besttime)+",")
+fd.close()
 
 # for proc in worstschedule:
 # 	print [task for task in proc]
-print "Worst="+str(worsttime)
+# print "\tWorst="+str(worsttime)
 
-# print float(worsttime)/besttime,2.0-1.0/num_proc
 
 
 # try topological sort
 roots=[]
-for i in range(n):
+for i in xrange(n):
 	if(pred[i]==[]):
 		roots.append(i)
 
@@ -219,34 +244,35 @@ bs=[]
 bt=1000000000
 wt=0
 ws=[]
-# TODO: permute roots
-for num in range(1000):
+lim=4*n
+# permute roots lim times
+for num in xrange(lim):
 	shuffle(roots)
 	topo=[]
 	tk=0
-	taken=[0 for i in range(n)]
-	for i in range(len(roots)):
+	taken=[0 for i in xrange(n)]
+	for i in xrange(len(roots)):
 		topo.append(roots[i])
 		taken[roots[i]]=1
 		tk+=1
 
 	while(tk<n):
 		poss=[]
-		for i in range(n):
-			temp=0
-			if(taken[i]==1):
+		for i in xrange(n):
+			if taken[i]==1:
 				continue
+			temp=0
 			for j in pred[i]:
 				if(taken[j]==1):
 					temp+=1
 			if(temp==len(pred[i])):		
 				poss.append(i)	
-		dis=0
-		di=-1		
+		
 		order=[]
-		for i in range(len(poss)):
+		lenp=len(poss)
+		for i in range(lenp):
 			a=poss[i]
-			mind=0
+			mind=-1
 			distances=[]
 			for j in range(len(topo)):
 				if(topo[j] in pred[a]):
@@ -254,9 +280,6 @@ for num in range(1000):
 					distances.append(len(topo)-j)
 			distances.sort()
 			order.append((distances,poss[i]))
-			if(mind>dis):
-				dis=mind
-				di=i
 
 		order.sort(reverse=True)
 		take=order[0][1]		
@@ -270,22 +293,25 @@ for num in range(1000):
 	if(result[1]<bt):
 		bt=result[1]
 		bs=schedule
-	if(result[1]>wt):
-		wt=result[1]
-		ws=schedule
+	# if(result[1]>wt):
+	# 	wt=result[1]
+	# 	ws=schedule
 		
-	sanity_check(schedule,num_tasks)
+	# sanity_check(schedule,num_tasks)
 	# for proc in schedule:
 	# 	print [task for task in proc]
-	assert finish_time(graph,schedule,time)==result[1]
+	# assert finish_time(graph,schedule,time)==result[1]
 
 
-print "Result of Topological sorts"
-# for proc in bs:
-# 	print [task for task in proc]
-print "Best="+str(bt)
+print "Result of Topological sorts:"
+for proc in bs:
+	print [task for task in proc]
+print "\tBest="+str(bt)
+
+fd=open("result.txt",'a')	
+fd.write(str(bt)+"\n")
+fd.close()
 
 # for proc in ws:
 # 	print [task for task in proc]
-print "Worst="+str(wt)
-					
+# print "\tWorst="+str(wt)

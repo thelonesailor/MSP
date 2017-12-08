@@ -17,7 +17,7 @@ def cal_height(graph):
 				else:
 					ht[nd]=0
 					S.extend([par for par in xrange(n) if graph[par][nd]==1 and ht[par]==-1])
-	print "Heigth:",ht
+	# print "Heigth:",ht
 	return ht
 	newht = []
 	for i in xrange(n):
@@ -144,16 +144,16 @@ def sanity_check(schedules,height):
 					print "Error"
 
 def find_schedule(graph,num_proc,pop_size,len_tasks):
-	print len_tasks
+	# print len_tasks
 	num_tasks = len(graph)
 	height = cal_height(graph)
-	print "Height\':",height
+	# print "Height\':",height
 	tasksets = generate_task_set(num_tasks,height)
 	schedules = []
 	for i in xrange(pop_size):
 		schedules.append(generate_schedule(tasksets,num_proc,num_tasks))
 	iterations = 0
-	while iterations!=100:
+	while iterations!=400:
 		ftime = [finish_time(graph,schedule,len_tasks) for schedule in schedules]
 		#print "Iteration:",iterations
 		#print_Schedules(schedules,ftime)
@@ -178,10 +178,15 @@ def find_schedule(graph,num_proc,pop_size,len_tasks):
 		ftime = [finish_time(graph,schedule,len_tasks) for schedule in schedules]
 		schedules[ftime.index(min(ftime))]=best_shd
 		iterations+=1
-		print finish_time(graph,best_shd,len_tasks)
+		# print finish_time(graph,best_shd,len_tasks)
 	# print finish_time(graph,[[21, 18, 5, 22, 25, 26, 32, 39, 9, 15, 16, 23], [35, 8, 10, 12, 37, 11, 24, 38], [27, 28, 30, 31, 7, 20, 29, 34, 36, 13], [0, 19, 14], [1, 2, 17, 4, 6, 33, 3]],len_tasks)
 	
-	print best_shd
+	temp=finish_time(graph,best_shd,len_tasks)
+	print temp
+	fd=open("result.txt",'a')	
+	fd.write(str(temp)+",")
+	fd.close()
+	# print best_shd
 
 
 # Input Format: On the first line there are three integers which are number of processors,number of tasks,
@@ -198,4 +203,4 @@ for i in xrange(num_edges):
 #for i in xrange(num_tasks):
 #	print "Child",i,":",[chd for chd in xrange(num_tasks) if graph[i][chd]==1]
 #	print "Parent",i,":",[par for par in xrange(num_tasks) if graph[par][i]==1]
-find_schedule(graph,num_proc,500,len_tasks)
+find_schedule(graph,num_proc,100,len_tasks)

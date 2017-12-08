@@ -1,6 +1,10 @@
 import sys,random
 from math import sqrt
 cin = sys.stdin
+
+from datetime import datetime
+random.seed(datetime.now())
+
 def printf(format,*args):
 	sys.stdout.write(format % args)
 def rint(lim,mode):
@@ -14,8 +18,10 @@ def rint(lim,mode):
 		return 0
 n = int(cin.readline())
 max_edge = (n*(n-1))/2
+# print max_edge
 nedge = rint(max_edge,2)
-nproc = random.randint(3,8)
+# print nedge
+nproc = random.randint(3,7)
 adj = [[0]*n for i in xrange(n)]
 ct=0
 while ct<nedge:
@@ -37,13 +43,21 @@ for k in xrange(n):
 				reach[i][j]=1
 for i in xrange(n):
 	reach[i][i]=0
+
+reach2 = [[0 for i in xrange(n)] for j in xrange(n)]
+for i in xrange(n):
+	for j in xrange(n):
+		reach2[i][j]=reach[i][j]
+
 for i in xrange(n):
 	for j in xrange(n):
 		if reach[i][j] :
 			for k in xrange(n):
 				if reach[j][k] and reach[i][k]:
-					reach[i][k]=0
-time = [random.randint(1,100) for i in xrange(n)]
+					reach2[i][k]=0
+reach=reach2
+
+time = [random.randint(1,50) for i in xrange(n)]
 nedg=0
 for i in xrange(n):
 	for j in xrange(n):
