@@ -1,28 +1,28 @@
-import sys,random
+import sys,random,bisect
 from heapq import heappush,heappop
 cin = sys.stdin
 cout = sys.stdout
 def cal_height(graph):
-	n = len(graph)
+	n = len(graph[0])
 	ht = [-1 for i in xrange(n)]
+	child = graph[0]
+	parent = graph[1]	
 	for i in xrange(n):
 		if ht[i]==-1:
-			S = []
-			S.append(i)
+			S = [i]
 			while S:
 				nd = S[-1]
 				if ht[nd]!=-1:
 					S.pop()
-					ht[nd] = (max([ht[par] for par in xrange(n) if graph[par][nd]==1] or [-1]))+1
+					ht[nd] = (max([ht[par] for par in parent[nd]] or [-1]))+1
 				else:
 					ht[nd]=0
-					S.extend([par for par in xrange(n) if graph[par][nd]==1 and ht[par]==-1])
-	# print "Heigth:",ht
-	return ht
+					S.extend([par for par in parent[nd] if ht[par]==-1])
+	#print "Heigth:",ht
+	mht = max(ht)
 	newht = []
 	for i in xrange(n):
-		cheights = [ht[chd] for chd in xrange(n) if graph[i][chd]==1]
-		minval = (min(cheights) if cheights else 10)-1
+		minval = min([ht[chd] for chd in child[i]] or [mht+1])-1
 		newht.append(random.randint(ht[i],minval))
 	return newht
 
@@ -31,7 +31,41 @@ def search_task(schedule,task):
 		for j in xrange(len(schedule[i])):
 			if schedule[i][j]==task:
 				return i,j
+	print "Searching for the wrong task in the schedule"
 	return 0,0
+
+def finish_time(graph,schedule,time):
+	n = len(graph[0])
+	parent = graph[1]
+	pos = [(-1,-1) for i in xrange(n)]
+	for i in xrange(len(schedule)) :
+		for j in xrange(len(schedule[i])) :
+			pos[schedule[i][j]]=(i,j)
+	for elem in pos :
+		if elem==(-1,-1):
+			print "Repeat Error"			
+	time_tasks = [-1]*n
+	for i in xrange(n):
+		if time_tasks[i]==-1:
+			S = []
+			S.append(i)
+			while S :
+				task = S[-1]
+				x,y = pos[task]
+				ptask = schedule[x][y-1] if y else -1 		
+				if time_tasks[task]!=-1:
+					S.pop()
+					min_par = max([time_tasks[par] for par in parent[task]] or [0])
+					minimum = min_par if y==0 else max(min_par,time_tasks[ptask])
+					time_tasks[task] = time[task]+minimum
+				else:
+					time_tasks[task]=0
+					if y:
+						S.append(ptask)
+					for par in parent[task]:
+						if time_tasks[par]==-1 and par!=ptask:
+							S.append(par)
+	return max(time_tasks)
 
 def mutation(schedule,height):
 	n = len(schedule)
@@ -44,55 +78,19 @@ def mutation(schedule,height):
 	i2,j2 = search_task(schedule,task2)
 	schedule[i1][j1],schedule[i2][j2] = schedule[i2][j2],schedule[i1][j1]
 
-def finish_time(graph,schedule,len_tasks):
-	n = len(graph)
-	pos = [(-1,-1) for i in xrange(n)]
-	for i in xrange(len(schedule)) :
-		for j in xrange(len(schedule[i])) :
-			#print "Schedule:",schedule[i][j]
-			pos[schedule[i][j]]=(i,j)
-	for elem in pos :
-		if elem==(-1,-1):
-			print "Repeat Error"			
-	time_tasks = [-1]*n
-	for i in xrange(n):
-		if time_tasks[i]==-1:
-			S = []
-			S.append(i)
-			ct=0
-			while S :			
-				task = S[-1]
-				x,y = pos[task]					
-				if time_tasks[task]!=-1:
-					S.pop()
-					min_par = max([time_tasks[par] for par in xrange(n) if graph[par][task]==1] or [0])
-					time_tasks[task] = len_tasks[task]+(min_par if y==0 else max(min_par,time_tasks[schedule[x][y-1]]))
-				else:
-					time_tasks[task]=0
-					if y and graph[schedule[x][y-1]][task]!=1:
-						S.append(schedule[x][y-1])
-					S.extend([par for par in xrange(n) if graph[par][task]==1 and time_tasks[par]==-1])
-
-	return max(time_tasks)
-
-def crossover(schedule1,schedule2,height):
-	num_procs = len(schedule1)
-	max_height = max(height)
+def crossover(s1,s2,hg):
+	num_procs = len(s1)
+	max_height = max(hg)
 	c = random.randint(0,max_height)
-	list1,list2 = [],[]
-	for i in xrange(num_procs):
-		ls = [elem for elem in schedule1[i] if height[elem]<=c]
-		ls.extend([elem for elem in schedule2[i] if height[elem]>c])
-		list1.append(ls)
-		ls = [elem for elem in schedule2[i] if height[elem]<=c]
-		ls.extend([elem for elem in schedule1[i] if height[elem]>c])
-		list2.append(ls)
-	return (list1,list2)
+	ls1 = [([nd for nd in s1[i] if hg[nd]<=c]+[nd for nd in s2[i] if hg[nd]>c]) for i in xrange(num_procs)]
+	ls2 = [([nd for nd in s2[i] if hg[nd]<=c]+[nd for nd in s1[i] if hg[nd]>c]) for i in xrange(num_procs)]
+	return (ls1,ls2)
 
 def generate_schedule(tasksets,num_proc,num_tasks):
 	schedule = [[] for i in xrange(num_proc)]
 	for tset in tasksets:
 		procs = range(num_proc)
+		random.shuffle(tset)
 		random.shuffle(procs)
 		for i in xrange(num_proc-1):
 			r = random.randint(0,len(tset))
@@ -102,8 +100,7 @@ def generate_schedule(tasksets,num_proc,num_tasks):
 	return schedule
 
 def generate_task_set(num_tasks,height):
-	mht = max(height)
-	tasksets = [[] for i in xrange(mht+1)]
+	tasksets = [[] for i in xrange(max(height)+1)]
 	for i in xrange(num_tasks):
 		tasksets[height[i]].append(i)
 	return tasksets
@@ -112,13 +109,15 @@ def reproduction(schedules,fit_val):
 	num_schedule = len(schedules)
 	fit_sum = sum(fit_val)
 	wheel = []
+	sm=0
 	for i in xrange(num_schedule):
-		for j in xrange(fit_val[i]):
-			wheel.append(i)
+		sm+=fit_val[i]
+		wheel.append(sm)
 	new_schedules = []
 	for i in xrange(num_schedule):
-		selection = random.randint(0,fit_sum-1)
-		new_schedules.append(schedules[wheel[selection]])
+		selection = random.randint(1,fit_sum)
+		selected_index = bisect.bisect_left(wheel,selection)
+		new_schedules.append(schedules[selected_index])
 	return new_schedules
 
 def pop_schedule(schedules):
@@ -137,29 +136,25 @@ def sanity_check(schedules,height):
 	for schedule in schedules:
 		sm = sum(len(processor) for processor in schedule)
 		if sm!=len(height):
-			print "Error"
+			print "Net tasks not preserved"
 		for processor in schedule:
 			for i in xrange(len(processor)-1):
 				if height[processor[i]]>height[processor[i+1]]:
-					print "Error"
+					print "Height Ordering Not followed"
 
-def find_schedule(graph,num_proc,pop_size,len_tasks):
-	# print len_tasks
-	num_tasks = len(graph)
+def find_schedule(graph,num_proc,time,pop_size,num_iterations):
+	#print time
+	num_tasks = len(graph[0])
 	height = cal_height(graph)
-	# print "Height\':",height
+	#print "Height\':",height
 	tasksets = generate_task_set(num_tasks,height)
-	schedules = []
-	for i in xrange(pop_size):
-		schedules.append(generate_schedule(tasksets,num_proc,num_tasks))
+	schedules = [generate_schedule(tasksets,num_proc,num_tasks) for i in xrange(pop_size)]
 	iterations = 0
-	while iterations!=400:
-		ftime = [finish_time(graph,schedule,len_tasks) for schedule in schedules]
-		#print "Iteration:",iterations
-		#print_Schedules(schedules,ftime)
+	ftime = [finish_time(graph,schedule,time) for schedule in schedules]
+	while iterations!=num_iterations:
 		sanity_check(schedules,height)
 		maxtime,mintime = max(ftime),min(ftime)
-		fit_val = [(maxtime-time)+1 for time in ftime]
+		fit_val = [(maxtime-times)+1 for times in ftime]
 		best_shd = schedules[ftime.index(mintime)]
 		new_schedules = reproduction(schedules,fit_val)
 		tmp_schedules = []
@@ -175,32 +170,29 @@ def find_schedule(graph,num_proc,pop_size,len_tasks):
 			if selection==1:
 				mutation(schedule,height)
 			schedules.append(schedule)
-		ftime = [finish_time(graph,schedule,len_tasks) for schedule in schedules]
-		schedules[ftime.index(min(ftime))]=best_shd
+		best_time = finish_time(graph,best_shd,time)
+		ftime = [finish_time(graph,schedule,time) for schedule in schedules]
+		mxi = ftime.index(max(ftime))
+		schedules[mxi]=best_shd
+		ftime[mxi]=best_time
 		iterations+=1
-		# print finish_time(graph,best_shd,len_tasks)
-	# print finish_time(graph,[[21, 18, 5, 22, 25, 26, 32, 39, 9, 15, 16, 23], [35, 8, 10, 12, 37, 11, 24, 38], [27, 28, 30, 31, 7, 20, 29, 34, 36, 13], [0, 19, 14], [1, 2, 17, 4, 6, 33, 3]],len_tasks)
-	
-	temp=finish_time(graph,best_shd,len_tasks)
-	print temp
-	fd=open("result.txt",'a')	
-	fd.write(str(temp)+",")
-	fd.close()
-	# print best_shd
 
+	# print best_time
+	cout.write(str(best_time)+",")
+	# fd=open("result.txt",'a')	
+	# fd.write(str(best_time)+",")
+	# fd.close()
+	# print best_shd
 
 # Input Format: On the first line there are three integers which are number of processors,number of tasks,
 # number of edges in the task graph respectively.
 # line consisting of num_tasks numbers
 # then num of edges lines follow each of which contains two integers u,v denoting edge is from u to v.
 num_tasks,num_edges,num_proc, = map(int,cin.readline().split(' '))
-len_tasks = map(int,cin.readline().split(' '))
-graph = [[0 for i in xrange(num_tasks)] for i in xrange(num_tasks)]
+time = map(int,cin.readline().split(' '))
+graph = [[] for i in xrange(num_tasks)],[[] for i in xrange(num_tasks)]
 for i in xrange(num_edges):
 	a,b = map(int,cin.readline().split(' '))
-	graph[a][b]=1
-#print graph
-#for i in xrange(num_tasks):
-#	print "Child",i,":",[chd for chd in xrange(num_tasks) if graph[i][chd]==1]
-#	print "Parent",i,":",[par for par in xrange(num_tasks) if graph[par][i]==1]
-find_schedule(graph,num_proc,100,len_tasks)
+	graph[0][a].append(b)
+	graph[1][b].append(a)
+find_schedule(graph,num_proc,time,500,100)

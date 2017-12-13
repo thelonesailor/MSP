@@ -1,7 +1,12 @@
 #!/bin/bash
 
-infolder="300"
-outfolder="Case300"
+for infolder in {50,100};
+do 
+for p in {2,4,8,16};
+do 
+
+outfolder=Inputs/"Case$infolder"_$p
+echo $outfolder;
 
 javac Convert.java
 
@@ -20,3 +25,6 @@ do
 	java Convert <./$infolder/rand0$x.stg >./$outfolder/in$x.txt
 	echo $x
 done;
+done;
+done;
+	rm Convert.class mylist.class

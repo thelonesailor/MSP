@@ -28,7 +28,7 @@ class Convert{
 		}
 		int nedges = 0 ;
 		for(int i=0 ; i<n ; i++) nedges+=par[i].size() ;
-		op.print(n+" "+nedges+" "+5) ;
+		op.print(n+" "+nedges+" "+16) ;
 		op.println();
 		for(int i=0 ; i<n ; i++) op.print(time[i]+(i!=(n-1) ? " " : "")) ;
 		op.println() ;

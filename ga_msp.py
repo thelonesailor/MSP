@@ -1,9 +1,10 @@
 from random import randint,shuffle
+import sys
 from sys import stdin, stdout
 from heapq import heappush,heappop
 
-N=200#population size, assumed even
-maxiterations=300
+N=500#population size, assumed even
+maxiterations=100
 prob_crossover=1.0
 prob_mutation=0.05
 cmax=0
@@ -133,11 +134,12 @@ def find_schedule():
 		check(beststring)
 
 	temp=compute_FT(bbs)	
-	fd=open("result.txt",'a')	
-	fd.write(str(temp)+",")
-	fd.close()
+	# fd=open("result.txt",'a')	
+	# fd.write(str(temp)+",")
+	# fd.close()
 
-	print(temp)
+	sys.stdout.write(str(temp)+",")
+	# print(temp)
 	# for a in bbs:
 	# 	print(a)
 

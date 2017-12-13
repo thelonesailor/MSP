@@ -1,24 +1,24 @@
-import sys
+import sys,random
 from heapq import heappush,heappop,heapify
 cin = sys.stdin
 cout = sys.stdout
-def find_schedule(graph,p,time):
+def evaluate(graph,p,time,priority_order):
 	schedule = [[] for i in xrange(p)]
-	child = graph[0]
-	parent = graph[1]
+	child,parent = graph
 	n = len(time)
-	ls = [(time[i],i) for i in xrange(n)]
-	ls.sort(key=lambda x:x[0],reverse=True)
-	ls = [elem[1] for elem in ls]
+	ls = priority_order
+	# ls = [(time[i],i) for i in xrange(n)]
+	# ls.sort(key=lambda x:x[0],reverse=True)
+	# ls = [elem[1] for elem in ls]
 	done = [0]*n
-	end_time = [-99]*n
+	end_time = [-1]*n
 	donect=0 
 	heap = [(0,i) for i in xrange(p)]
 	heapify(heap)
 	while donect<n :
+		#print "Heap is:",heap
 		item = heappop(heap)
-		tproc = item[0]
-		proc = item[1]
+		tproc,proc = item
 		lefttask = -1
 		for task in ls:
 			if done[task]:
@@ -38,14 +38,15 @@ def find_schedule(graph,p,time):
 			done[lefttask]=1
 			end_time[lefttask]=tproc+time[lefttask]
 		else:
-			tmp = []
+			tmp = [item]
 			while heap and heap[0][0]==tproc:
 				tmp.append(heappop(heap))
 			new_time = heap[0][0]
 			while tmp:
 				heappush(heap,(new_time,(tmp.pop())[1]))
 	mtime = max(elem[0] for elem in heap)
-	return schedule,mtime
+	sanity_check(schedule,num_tasks)
+	return mtime
 
 def finish_time(graph,schedule,time):
 	n = len(graph[0])
@@ -80,22 +81,40 @@ def finish_time(graph,schedule,time):
 							S.append(par)
 	return max(time_tasks)
 
+def swap(ls):
+	newls = [elem for elem in ls]
+	n = len(newls) ;
+	i = random.randint(0,n-1)
+	j = random.randint(0,n-1)
+	newls[i],newls[j] = newls[j],newls[i]
+	return newls
+
 def sanity_check(schedule,num_tasks):
 	sm = sum(len(processor) for processor in schedule)
 	if sm!=num_tasks:
 		print "Net tasks not preserved"
 
-num_tasks,num_edges,num_proc, = map(int,cin.readline().split(' '))
+num_tasks,num_edges,num_proc = map(int,cin.readline().split(' '))
 time = map(int,cin.readline().split(' '))
 graph = [[] for i in xrange(num_tasks)],[[] for i in xrange(num_tasks)]
 for i in xrange(num_edges):
 	a,b = map(int,cin.readline().split(' '))
 	graph[0][a].append(b)
 	graph[1][b].append(a)
-result = find_schedule(graph,num_proc,time)
-schedule = result[0]
-sanity_check(schedule,num_tasks)
-for proc in schedule:
-	print [task for task in proc]
-print finish_time(graph,schedule,time),result[1]
+priority_order = [i for i in xrange(0,num_tasks)]
+unstable=1
+result = evaluate(graph,num_proc,time,priority_order)
+ct=40*num_tasks
+while unstable:
+	if not ct:
+		unstable=0
+		break
+	newls = swap(priority_order)
+	new_res = evaluate(graph,num_proc,time,newls)
+	if new_res<result:
+		result=new_res
+		priority_order=newls
+	else:
+		ct-=1
+print result
 
