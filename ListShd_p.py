@@ -174,6 +174,8 @@ schedule = result[0]
 bestschedule=schedule
 besttime=result[1]
 
+worstschedule=schedule
+worsttime=result[1]
 
 ls = [(time[i],i) for i in range(n)]
 ls.sort(key=lambda x:x[0],reverse=True)	
@@ -194,9 +196,11 @@ if(result[1]<besttime):
 	besttime=result[1]
 	bestschedule=schedule
 
+if(result[1]>worsttime):
+	worsttime=result[1]
+	worstschedule=schedule
 
-worstschedule=schedule
-worsttime=result[1]
+
 
 # try some random permutations
 lim=40*n
@@ -218,9 +222,9 @@ for i in range(lim):
 		besttime=result[1]
 		bestschedule=schedule
 
-	# if(result[1]>worsttime):
-	# 	worsttime=result[1]
-	# 	worstschedule=schedule
+	if(result[1]>worsttime):
+		worsttime=result[1]
+		worstschedule=schedule
 
 # print("Result of random permutations:")
 # for proc in bestschedule:
@@ -234,6 +238,7 @@ cout.write(str(besttime)+",")
 # for proc in worstschedule:
 # 	print [task for task in proc]
 # print "\tWorst="+str(worsttime)
+cout.write(str(worsttime)+",")
 
 
 
@@ -310,7 +315,7 @@ for num in range(lim):
 # print ("Result of Topological sorts:")
 # for proc in bs:
 # 	print ([task for task in proc])
-cout.write(str(bt)+",")
+cout.write(str(bt)+"\n")
 
 # fd=open("result.txt",'a')	
 # fd.write(str(bt)+"\n")

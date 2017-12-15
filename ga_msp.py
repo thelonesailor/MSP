@@ -138,7 +138,7 @@ def find_schedule():
 	# fd.write(str(temp)+",")
 	# fd.close()
 
-	sys.stdout.write(str(temp)+",")
+	sys.stdout.write(str(temp)+"\n")
 	# print(temp)
 	# for a in bbs:
 	# 	print(a)

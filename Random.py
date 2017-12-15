@@ -16,12 +16,12 @@ def rint(lim,mode):
 	else:
 		print "Mode Error"
 		return 0
-n = int(cin.readline())
+n = int(sys.argv[1])
 max_edge = (n*(n-1))/2
 # print max_edge
 nedge = rint(max_edge,2)
 # print nedge
-nproc = random.randint(5,10)
+nproc = int(sys.argv[2])
 adj = [[0]*n for i in xrange(n)]
 ct=0
 while ct<nedge:

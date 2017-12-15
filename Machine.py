@@ -178,7 +178,7 @@ def find_schedule(graph,num_proc,time,pop_size,num_iterations):
 		iterations+=1
 
 	# print best_time
-	cout.write(str(best_time)+",")
+	cout.write(str(best_time)+"\n")
 	# fd=open("result.txt",'a')	
 	# fd.write(str(best_time)+",")
 	# fd.close()

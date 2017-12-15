@@ -7,6 +7,7 @@ class Convert{
 	static int time[] ;
 	static PrintWriter op = new PrintWriter(System.out) ;
 	public static void main(String args[]){
+		String num_proc=args[0];
 		Scanner sc = new Scanner(System.in) ;
 		int n = sc.nextInt() ;
 		par = new mylist[n] ;		
@@ -28,7 +29,7 @@ class Convert{
 		}
 		int nedges = 0 ;
 		for(int i=0 ; i<n ; i++) nedges+=par[i].size() ;
-		op.print(n+" "+nedges+" "+16) ;
+		op.print(n+" "+nedges+" "+num_proc) ;
 		op.println();
 		for(int i=0 ; i<n ; i++) op.print(time[i]+(i!=(n-1) ? " " : "")) ;
 		op.println() ;
