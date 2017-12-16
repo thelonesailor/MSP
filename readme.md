@@ -4,7 +4,7 @@
 
 link for report: https://docs.google.com/document/d/14DJq7WXIiWILgJ9qX0H9KeC6FdyP2yvbG1UfvLXwZxI/edit?usp=sharing
 
-geneticprakhar,
-geneticronak,
+geneticprakhar
+geneticronak
 bestrandom(inc & dec),worstrandom,topologically,
 swapsearch

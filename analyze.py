@@ -4,7 +4,6 @@ import sys
 csvfile=open(sys.argv[1], 'r')
 reader = list(csv.reader(csvfile, delimiter=','))
 
-
 csvfile2=open(sys.argv[2], 'r')
 reader2 = list(csv.reader(csvfile2, delimiter=','))
 
@@ -20,19 +19,17 @@ reader5 = list(csv.reader(csvfile5, delimiter=','))
 
 prakhargenetic=0.0
 ronakgenetic=0.0
-randomls=0.0
-worstls=0.0
+bestrandomls=0.0
+worstrandomls=0.0
 topologicalls=0.0
 swapsearch=0.0
 
-num=180
+num=180# there are 180 task graphs
 
-# print(len(reader))
-# print(len(reader2))
 pg=[]
 rg=[]
-rls=[]
-wls=[]
+brls=[]
+wrls=[]
 tls=[]
 ss=[]
 
@@ -48,12 +45,12 @@ for i in range(num):
 	rg.append(t)
 
 	t=((int(reader4[i][0])-opt)*100)/opt
-	randomls+=t
-	rls.append(t)
+	bestrandomls+=t
+	brls.append(t)
 
 	t=((int(reader4[i][1])-opt)*100)/opt
-	worstls+=t
-	wls.append(t)
+	worstrandomls+=t
+	wrls.append(t)
 
 	t=((int(reader4[i][2])-opt)*100)/opt
 	topologicalls+=t
@@ -65,33 +62,33 @@ for i in range(num):
 
 prakhargenetic/=num
 ronakgenetic/=num
-randomls/=num
-worstls/=num
+bestrandomls/=num
+worstrandomls/=num
 topologicalls/=num
 swapsearch/=num
 
 pg.sort()
 rg.sort()
-rls.sort()
-wls.sort()
+brls.sort()
+wrls.sort()
 tls.sort()
 ss.sort()
 
-sys.stdout.write("prakhargenetic= "+str(prakhargenetic)+"%")
+sys.stdout.write("prakhargenetic=   "+str(prakhargenetic)+"%")
 # sys.stdout.write("\t"+str(pg[num-1])+"%")
 print()
-sys.stdout.write("ronakgenetic=   "+str(ronakgenetic)+"%")
+sys.stdout.write("ronakgenetic=     "+str(ronakgenetic)+"%")
 # sys.stdout.write("\t"+str(rg[num-1])+"%")
 print()
-sys.stdout.write("randomls=       "+str(randomls)+"%")
-# sys.stdout.write("\t"+str(rls[num-1])+"%")
+sys.stdout.write("bestrandomls=     "+str(bestrandomls)+"%")
+# sys.stdout.write("\t"+str(brls[num-1])+"%")
 print()
-sys.stdout.write("worstls=        "+str(worstls)+"%")
-# sys.stdout.write("\t"+str(wls[num-1])+"%")
+sys.stdout.write("worstrandomls=    "+str(worstrandomls)+"%")
+# sys.stdout.write("\t"+str(wrls[num-1])+"%")
 print()
-sys.stdout.write("topologicalls=  "+str(topologicalls)+"%")
+sys.stdout.write("topologicalls=    "+str(topologicalls)+"%")
 # sys.stdout.write("\t"+str(tls[num-1])+"%")
 print()
-sys.stdout.write("swapsearch=     "+str(swapsearch)+"%")
+sys.stdout.write("swapsearch=       "+str(swapsearch)+"%")
 # sys.stdout.write("\t"+str(ss[num-1])+"%")
 print()

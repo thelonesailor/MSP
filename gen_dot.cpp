@@ -2,10 +2,10 @@
 #include <time.h>
 using namespace std;
 
-#define MIN_PER_RANK 9 /* Nodes/Rank: How 'fat' the DAG should be.  */
-#define MAX_PER_RANK 11
-#define MIN_RANKS 9    /* Ranks: How 'tall' the DAG should be.  */
-#define MAX_RANKS 11
+#define MIN_PER_RANK 10 /* Nodes/Rank: How 'fat' the DAG should be.  */
+#define MAX_PER_RANK 12
+#define MIN_RANKS 10    /* Ranks: How 'tall' the DAG should be.  */
+#define MAX_RANKS 12
 #define PERCENT 10     /* Chance of having an Edge.  */
 
 int edge[MAX_PER_RANK*MAX_RANKS+1][MAX_PER_RANK*MAX_RANKS+1];
@@ -18,10 +18,9 @@ int main (int argc, char** argv)
   int i, j, k,nodes = 0;
   srand (time (NULL));
 
-  int ranks = MIN_RANKS
-              + (rand () % (MAX_RANKS - MIN_RANKS + 1));
+  int ranks = MIN_RANKS + (rand () % (MAX_RANKS - MIN_RANKS + 1));
 
-  // printf ("digraph {\n");
+
   for (i = 0; i < ranks; i++)
     {
       /* New nodes of 'higher' rank than all nodes generated till now.  */
