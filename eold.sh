@@ -14,29 +14,29 @@ do
 
 	echo "Generating n=$n e=$e p=$p l=$l";
 	# time ./generate $n $e $p $l > ./Inputs/$n-$e-$p-$l.txt
-	time python Random.py $n $p >./Inputs/$n-$e-$p-$l-random.txt
+	# time python Random.py $n $p >./Inputs/$n-$e-$p-$l-random.txt
 	# time ./gen_dot $p >./Inputs/$n-$e-$p-$l.txt
 	echo "Generated";	
 
 
 	echo "Genetic1-Prakhar-----------------------";
-	# time python3 ga_msp.py <./Inputs/$n-$e-$p-$l.txt
-	time python3 ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
+	time python3 ga_msp.py <./Inputs/$n-$e-$p-$l.txt
+	# time python3 ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
 
 	
 	echo "Genetic2-Ronak-------------------------";
-	# time python Machine.py <./Inputs/$n-$e-$p-$l.txt
-	time python Machine.py <./Inputs/$n-$e-$p-$l-random.txt
+	time python Machine.py <./Inputs/$n-$e-$p-$l.txt
+	# time python Machine.py <./Inputs/$n-$e-$p-$l-random.txt
 
 
 	echo "Random & Topologically sorted----------------------------";
-	# time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
-	time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
+	time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
+	# time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
 
 
 	echo "Swap search---------------------------";
-	# time python ListShd.py <./Inputs/$n-$e-$p-$l.txt	
-	time python ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
+	time python ListShd.py <./Inputs/$n-$e-$p-$l.txt	
+	# time python ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
 	
 done;
 done;

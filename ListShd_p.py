@@ -8,14 +8,14 @@ def find_schedule(graph,p,ls):
 	schedule = [[] for i in range(p)]
 	child = succ
 	parent = pred
-	# n = len(time)	
-		
+	# n = len(time)
+
 	done = [False]*n
 	end_time = [-1]*n
-	donect=0 
+	donect=0
 	heap = [(0,i) for i in range(p)]
 	heapify(heap)
-	while donect<n :
+	while donect < n:
 		item = heappop(heap)
 		tproc = item[0]
 		proc = item[1]
@@ -42,26 +42,26 @@ def find_schedule(graph,p,ls):
 			tmp = []
 			while heap and heap[0][0]==tproc:
 				tmp.append(heappop(heap))
-			if(heap):	
+			if(heap):
 				new_time = heap[0][0]
-			else:	
+			else:
 				new_time = tproc+1
 			while tmp:
 				heappush(heap,(new_time,(tmp.pop())[1]))
 			heappush(heap,(new_time,proc))
-				
+
 	mtime = max(elem[0] for elem in heap)
 	return schedule,mtime
 
 def finish_time(graph,schedule,time):
-	
+
 	pos = [(-1,-1) for i in range(n)]
 	for i in range(len(schedule)) :
 		for j in range(len(schedule[i])) :
 			pos[schedule[i][j]]=(i,j)
 	for elem in pos :
 		if elem==(-1,-1):
-			print ("Repeat Error")			
+			print ("Repeat Error")
 	time_tasks = [-1]*n
 	for i in range(n):
 		if time_tasks[i]==-1:
@@ -70,7 +70,7 @@ def finish_time(graph,schedule,time):
 			while S :
 				task = S[-1]
 				x,y = pos[task]
-				ptask = schedule[x][y-1] if y else -1 		
+				ptask = schedule[x][y-1] if y else -1
 				if time_tasks[task]!=-1:
 					S.pop()
 					min_par = max([time_tasks[par] for par in parent[task]] or [0])
@@ -157,7 +157,7 @@ child=succ
 
 
 ls = [(time[i],i) for i in range(n)]
-ls.sort(key=lambda x:x[0],reverse=False)	
+ls.sort(key=lambda x:x[0],reverse=False)
 ls2=[]
 for i in range(len(ls)):
 	ls2.append(ls[i][1])
@@ -168,7 +168,7 @@ schedule = result[0]
 # print ("Increasing order of time")
 # for proc in schedule:
 # 	print [task for task in proc]
-# assert finish_time(graph,schedule,time)==result[1] 
+# assert finish_time(graph,schedule,time)==result[1]
 # print(result[1])
 
 bestschedule=schedule
@@ -178,7 +178,7 @@ worstschedule=schedule
 worsttime=result[1]
 
 ls = [(time[i],i) for i in range(n)]
-ls.sort(key=lambda x:x[0],reverse=True)	
+ls.sort(key=lambda x:x[0],reverse=True)
 ls2=[]
 for i in range(len(ls)):
 	ls2.append(ls[i][1])
@@ -186,7 +186,7 @@ ls=ls2
 result = find_schedule(graph,num_proc,ls)
 schedule = result[0]
 # sanity_check(schedule,num_tasks)
-# print ("Decreasing order of time:")	
+# print ("Decreasing order of time:")
 # for proc in schedule:
 	# print ([task for task in proc])
 # assert finish_time(graph,schedule,time)==result[1]
@@ -208,7 +208,7 @@ ls = [i for i in range(n)]
 shuffle(ls)
 for i in range(lim):
 	shuffle(ls)
-	# print(ls)	
+	# print(ls)
 	result = find_schedule(graph,num_proc,ls)
 	schedule = result[0]
 	# sanity_check(schedule,num_tasks)
@@ -231,7 +231,7 @@ for i in range(lim):
 # 	print [task for task in proc]
 cout.write(str(besttime)+",")
 
-# fd=open("result.txt",'a')	
+# fd=open("result.txt",'a')
 # fd.write(str(besttime)+",")
 # fd.close()
 
@@ -274,9 +274,9 @@ for num in range(lim):
 			for j in pred[i]:
 				if(taken[j]==1):
 					temp+=1
-			if(temp==len(pred[i])):		
-				poss.append(i)	
-		
+			if(temp==len(pred[i])):
+				poss.append(i)
+
 		order=[]
 		lenp=len(poss)
 		for i in range(lenp):
@@ -291,10 +291,10 @@ for num in range(lim):
 			order.append((distances,poss[i]))
 
 		order.sort(reverse=True)
-		take=order[0][1]		
+		take=order[0][1]
 		topo.append(take)
-		taken[take]=1	
-		tk+=1	
+		taken[take]=1
+		tk+=1
 
 	# print topo
 	result = find_schedule(graph,num_proc,topo)
@@ -305,7 +305,7 @@ for num in range(lim):
 	# if(result[1]>wt):
 	# 	wt=result[1]
 	# 	ws=schedule
-		
+
 	# sanity_check(schedule,num_tasks)
 	# for proc in schedule:
 	# 	print [task for task in proc]
@@ -317,7 +317,7 @@ for num in range(lim):
 # 	print ([task for task in proc])
 cout.write(str(bt)+"\n")
 
-# fd=open("result.txt",'a')	
+# fd=open("result.txt",'a')
 # fd.write(str(bt)+"\n")
 # fd.close()
 
