@@ -1,64 +1,64 @@
 Case50_2
-prakhargenetic=   0.8495054304862129%
-ronakgenetic=     0.5504932382687663%
-bestrandomls=     0.4718557113977745%
-worstrandomls=    12.390721905270848%
-topologicalls=    2.1267879469935904%
-swapsearch=       0.4899786504678279%
+prakhargenetic=   0.85%
+ronakgenetic=     0.55%
+bestrandomls=     0.47%
+worstrandomls=    12.39%
+topologicalls=    2.13%
+swapsearch=       0.49%
 -----------------------------------------------
 Case50_4
-prakhargenetic=   6.994850504023326%
-ronakgenetic=     7.895646804255638%
-bestrandomls=     1.1606633454205348%
-worstrandomls=    24.286422162113094%
-topologicalls=    5.000871497705079%
-swapsearch=       1.0329874566852761%
+prakhargenetic=   6.99%
+ronakgenetic=     7.9%
+bestrandomls=     1.16%
+worstrandomls=    24.29%
+topologicalls=    5.0%
+swapsearch=       1.03%
 -----------------------------------------------
 Case50_8
-prakhargenetic=   16.549866445442657%
-ronakgenetic=     23.830092207763386%
-bestrandomls=     1.4187451119508505%
-worstrandomls=    19.181705313358513%
-topologicalls=    3.3512667776813663%
-swapsearch=       1.5163789988266223%
+prakhargenetic=   16.55%
+ronakgenetic=     23.83%
+bestrandomls=     1.42%
+worstrandomls=    19.18%
+topologicalls=    3.35%
+swapsearch=       1.52%
 -----------------------------------------------
 Case50_16
-prakhargenetic=   15.527736256649876%
-ronakgenetic=     18.826787579235894%
+prakhargenetic=   15.53%
+ronakgenetic=     18.83%
 bestrandomls=     0.0%
-worstrandomls=    1.770929826484464%
-topologicalls=    0.0205761316872428%
+worstrandomls=    1.77%
+topologicalls=    0.02%
 swapsearch=       0.0%
 -----------------------------------------------
 Case100_2
-prakhargenetic=   1.1763969601893%
-ronakgenetic=     0.7097077072721624%
-bestrandomls=     0.5525331569659582%
-worstrandomls=    9.976573796306916%
-topologicalls=    2.1794603734436615%
-swapsearch=       0.40636435482545363%
+prakhargenetic=   1.18%
+ronakgenetic=     0.71%
+bestrandomls=     0.55%
+worstrandomls=    9.98%
+topologicalls=    2.18%
+swapsearch=       0.41%
 -----------------------------------------------
 Case100_4
-prakhargenetic=   10.924211379378638%
-ronakgenetic=     10.530968356044964%
-bestrandomls=     0.8427032484259246%
-worstrandomls=    18.01186731378415%
-topologicalls=    3.7367399426468006%
-swapsearch=       0.5492883207950395%
+prakhargenetic=   10.92%
+ronakgenetic=     10.53%
+bestrandomls=     0.84%
+worstrandomls=    18.01%
+topologicalls=    3.74%
+swapsearch=       0.55%
 -----------------------------------------------
 Case100_8
-prakhargenetic=   28.83472902823914%
-ronakgenetic=     32.34378790765316%
-bestrandomls=     1.1683165286743076%
-worstrandomls=    16.73689570450064%
-topologicalls=    3.16551860016197%
-swapsearch=       0.8626205404904086%
+prakhargenetic=   28.83%
+ronakgenetic=     32.34%
+bestrandomls=     1.17%
+worstrandomls=    16.74%
+topologicalls=    3.17%
+swapsearch=       0.86%
 -----------------------------------------------
 Case100_16
-prakhargenetic=   28.981278916236857%
-ronakgenetic=     30.014639191937263%
-bestrandomls=     0.2478119452909369%
-worstrandomls=    3.4232896149496854%
-topologicalls=    0.5280250454882808%
-swapsearch=       0.21697758357422225%
+prakhargenetic=   28.98%
+ronakgenetic=     30.01%
+bestrandomls=     0.25%
+worstrandomls=    3.42%
+topologicalls=    0.53%
+swapsearch=       0.22%
 -----------------------------------------------

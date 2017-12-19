@@ -3,11 +3,11 @@ import sys
 from sys import stdin, stdout
 from heapq import heappush,heappop
 
-N=500#population size, assumed even
-maxiterations=100
-prob_crossover=1.0
-prob_mutation=0.05
-cmax=0
+N = 500  # population size, assumed even
+maxiterations = 100
+prob_crossover = 1.0
+prob_mutation = 0.05
+cmax = 0
 maxheight=0
 beststring=[]
 n,m,p = map(int,stdin.readline().split())
@@ -79,7 +79,7 @@ def find_schedule():
 	global prob_crossover,beststring
 	fmin=0
 	bs=1000000000
-	bbs=[]	
+	bbs=[]
 	for i in range(0,maxiterations):
 
 		ft=[]
@@ -133,8 +133,8 @@ def find_schedule():
 			bbs=beststring
 		check(beststring)
 
-	temp=compute_FT(bbs)	
-	# fd=open("result.txt",'a')	
+	temp=compute_FT(bbs)
+	# fd=open("result.txt",'a')
 	# fd.write(str(temp)+",")
 	# fd.close()
 
@@ -161,8 +161,8 @@ def check(S):
 		if(a[i]<1):
 			print(i)
 			print(S)
-			
-			print("Missing element")	
+
+			print("Missing element")
 		elif(a[i]>1):
 			print("Multiple element")
 
@@ -281,36 +281,36 @@ def compute_FT(S):
 			pos[S[i][j]]=(i,j)
 	for elem in pos :
 		if elem==(-1,-1):
-			print ("Repeat Error")	
-	
+			print ("Repeat Error")
+
 
 	done=[0 for i in range(n)]
-	stack=[]	
+	stack=[]
 
 	for ls in S:
 		l=len(ls)
 		for j in range(l):
 			stack.append(ls[j])
-		
+
 	prv=[-1 for i in range(n)]
 	for i in range(p):
 		l=len(S[i])
 		for j in range(1,l):
 			prv[S[i][j]]=S[i][j-1]
-			
 
 
-	while(len(stack)>0):		
+
+	while(len(stack)>0):
 		a=stack[-1]
 		if(done[a]==0):
-			
+
 			if(prv[a]==-1 and len(pred[a])==0):
 				start[a]=0
 				finish[a]=start[a]+time[a]
 				done[a]=1
 				stack.pop()
 				continue
-			
+
 			f=0
 			for b in pred[a]:
 				if(done[b]==0):

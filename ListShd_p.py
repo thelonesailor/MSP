@@ -1,10 +1,11 @@
 import sys
 from random import shuffle
-from heapq import heappush,heappop,heapify
+from heapq import heappush, heappop, heapify
 cin = sys.stdin
 cout = sys.stdout
 
-def find_schedule(graph,p,ls):
+
+def find_schedule(graph, p, ls):
 	schedule = [[] for i in range(p)]
 	child = succ
 	parent = pred
@@ -128,34 +129,8 @@ for i in range(n):
 parent=pred
 child=succ
 
-# h=[-1 for i in range(n)]
-# def height(t):
-# 	global h
-# 	if(h[t]>-1):
-# 		return h[t]
 
-# 	if(pred[t]==[]):
-# 		h[t]=0
-# 	else:
-# 		maxh=-1
-# 		for a in pred[t]:
-# 			temp=height(a)
-# 			if(temp>maxh):
-# 				maxh=temp
-
-# 		if(maxh==-1):
-# 			print("something is wrong 1")
-
-# 		h[t]=maxh+1
-
-# 	return h[t]
-
-# for i in range(0,n):
-# 	height(i)
-# 	if(h[i]==-1):
-# 		print("Something Wrong for h["+str(i)+"]  2")
-
-
+## Increasing order of time
 ls = [(time[i],i) for i in range(n)]
 ls.sort(key=lambda x:x[0],reverse=False)
 ls2=[]
@@ -177,6 +152,7 @@ besttime=result[1]
 worstschedule=schedule
 worsttime=result[1]
 
+## Decreasing order of time
 ls = [(time[i],i) for i in range(n)]
 ls.sort(key=lambda x:x[0],reverse=True)
 ls2=[]
@@ -202,7 +178,7 @@ if(result[1]>worsttime):
 
 
 
-# try some random permutations
+## Random permutations
 lim=40*n
 ls = [i for i in range(n)]
 shuffle(ls)
@@ -242,7 +218,7 @@ cout.write(str(worsttime)+",")
 
 
 
-# try topological sort
+## Topologically sorted permutations
 roots=[]
 for i in range(n):
 	if(pred[i]==[]):
