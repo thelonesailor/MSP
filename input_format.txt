@@ -1,3 +1,8 @@
-n e p
-n numbers denoting time of tasks
-e lines containing u v each denoting edge from u to v
+Tasks are numbered 0 to <number_of_tasks>-1
+Input format is between dotted lines:
+
+-----------------------------------------------------
+<number_of_tasks> <number_of_edges> <number_of_processors>
+<number_of_tasks> numbers in one line denoting time taken by tasks
+<number_of_edges> lines each containing "u v" denoting edge from task u to task v (0<=u,v<=<number_of_tasks>-1)
+-----------------------------------------------------
