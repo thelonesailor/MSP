@@ -1,7 +1,10 @@
 #!/bin/bash
-	g++ -O3 -std=c++11 -o generate rgpos.cpp
-	g++ -O3 -std=c++11 -o gen_dot gen_dot.cpp
+	g++ -O3 -std=c++11 -o generate Generators/rgpos.cpp
+	g++ -O3 -std=c++11 -o gen_dot Generators/gen_dot.cpp
 
+# rand=0 for Generators/rgpos.cpp
+# rand=1 for Generators/Random.py
+rand=$1
 
 for n in {100..100};
 do
@@ -12,32 +15,48 @@ do
 for l in 1000;
 do
 
-	echo "Generating n=$n e=$e p=$p l=$l";
-	# time ./generate $n $e $p $l > ./Inputs/$n-$e-$p-$l.txt
-	# time python Random.py $n $p >./Inputs/$n-$e-$p-$l-random.txt
-	# time ./gen_dot $p >./Inputs/$n-$e-$p-$l.txt
-	echo "Generated";	
-
+	echo "Generating n=$n e=$e p=$p l=$l , rand=$rand";
+	if [ $rand -eq 0 ]
+	then
+		time ./generate $n $e $p $l > ./Inputs/$n-$e-$p-$l.txt
+		# time ./gen_dot $p >./Inputs/$n-$e-$p-$l.txt
+	else
+		time python Generators/Random.py $n $p >./Inputs/$n-$e-$p-$l-random.txt
+	fi
+	echo "Generated";
 
 	echo "Genetic1-Prakhar-----------------------";
-	time python3 ga_msp.py <./Inputs/$n-$e-$p-$l.txt
-	# time python3 ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
+	if [ $rand -eq 0 ]
+	then
+		time python3 ga_msp.py <./Inputs/$n-$e-$p-$l.txt
+	else
+		time python3 ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
+	fi
 
-	
 	echo "Genetic2-Ronak-------------------------";
-	time python Machine.py <./Inputs/$n-$e-$p-$l.txt
-	# time python Machine.py <./Inputs/$n-$e-$p-$l-random.txt
-
+	if [ $rand -eq 0 ]
+	then
+		time python Machine.py <./Inputs/$n-$e-$p-$l.txt
+	else
+		time python Machine.py <./Inputs/$n-$e-$p-$l-random.txt
+	fi
 
 	echo "Random & Topologically sorted----------------------------";
-	time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
-	# time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
-
+	if [ $rand -eq 0 ]
+	then
+		time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
+	else
+		time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
+	fi
 
 	echo "Swap search---------------------------";
-	time python ListShd.py <./Inputs/$n-$e-$p-$l.txt	
-	# time python ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
-	
+	if [ $rand -eq 0 ]
+	then
+		time python ListShd.py <./Inputs/$n-$e-$p-$l.txt
+	else
+		time python ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
+	fi
+
 done;
 done;
 done;
