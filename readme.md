@@ -12,7 +12,7 @@ Best results were found with `ListShd.py`, to run it use:
 
 	python ListShd.py  < input  > output
 
-`input` should have format specified by `input_format.txt`
+`input` should have format specified by `input_format.md`
 
 `output` will have the time taken by best schedule found.
 
