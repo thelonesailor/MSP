@@ -28,33 +28,40 @@ do
 	echo "Genetic1-Prakhar-----------------------";
 	if [ $rand -eq 0 ]
 	then
-		time python3 ga_msp.py <./Inputs/$n-$e-$p-$l.txt
+		time python3 Code/ga_msp.py <./Inputs/$n-$e-$p-$l.txt
 	else
-		time python3 ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
+		time python3 Code/ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
 	fi
 
 	echo "Genetic2-Ronak-------------------------";
 	if [ $rand -eq 0 ]
 	then
-		time python Machine.py <./Inputs/$n-$e-$p-$l.txt
+		time python Code/Machine.py <./Inputs/$n-$e-$p-$l.txt
 	else
-		time python Machine.py <./Inputs/$n-$e-$p-$l-random.txt
+		time python Code/Machine.py <./Inputs/$n-$e-$p-$l-random.txt
 	fi
 
 	echo "Random & Topologically sorted----------------------------";
 	if [ $rand -eq 0 ]
 	then
-		time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
+		time python3 Code/ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
 	else
-		time python3 ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
+		time python3 Code/ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
 	fi
 
 	echo "Swap search---------------------------";
 	if [ $rand -eq 0 ]
 	then
-		time python ListShd.py <./Inputs/$n-$e-$p-$l.txt
+		time python Code/ListShd.py <./Inputs/$n-$e-$p-$l.txt
 	else
-		time python ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
+		time python Code/ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
+	fi
+
+	if [ $rand -eq 0 ]
+	then
+		rm ./Inputs/$n-$e-$p-$l.txt
+	else
+		rm ./Inputs/$n-$e-$p-$l-random.txt
 	fi
 
 done;
