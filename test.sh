@@ -11,6 +11,7 @@ time ./a.sh &
 time ./convert.sh &
 time ./eold.sh 0 &
 time ./eold.sh 1 &
+time ./eold.sh 2 &
 wait
 rm -rf Result_test
 

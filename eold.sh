@@ -1,9 +1,11 @@
 #!/bin/bash
-	g++ -O3 -std=c++11 -o generate Generators/rgpos.cpp
-	g++ -O3 -std=c++11 -o gen_dot Generators/gen_dot.cpp
+s="$(date +"%m%d%y%T")"$1
+	g++ -O3 -std=c++11 -o generate$s Generators/rgpos.cpp
+	g++ -O3 -std=c++11 -o gen_dot$s Generators/gen_dot.cpp
 
 # rand=0 for Generators/rgpos.cpp
-# rand=1 for Generators/Random.py
+# rand=1 for Generators/gen_dot.cpp
+# rand=2 for Generators/Random.py
 rand=$1
 
 for n in {100..100};
@@ -18,54 +20,34 @@ do
 	echo "Generating n=$n e=$e p=$p l=$l , rand=$rand";
 	if [ $rand -eq 0 ]
 	then
-		time ./generate $n $e $p $l > ./Inputs/$n-$e-$p-$l.txt
-		# time ./gen_dot $p >./Inputs/$n-$e-$p-$l.txt
+		time ./generate$s $n $e $p $l > ./Inputs/$n-$e-$p-$l-$rand.txt
+	elif [ $rand -eq 1 ]
+	then
+		time ./gen_dot$s $p >./Inputs/$n-$e-$p-$l-$rand.txt
+	elif [ $rand -eq 2]
+	then
+		time python Generators/Random.py $n $p >./Inputs/$n-$e-$p-$l-$rand.txt
 	else
-		time python Generators/Random.py $n $p >./Inputs/$n-$e-$p-$l-random.txt
+		echo "Invalid parameter given";
 	fi
 	echo "Generated";
 
 	echo "Genetic1-Prakhar-----------------------";
-	if [ $rand -eq 0 ]
-	then
-		time python3 Code/ga_msp.py <./Inputs/$n-$e-$p-$l.txt
-	else
-		time python3 Code/ga_msp.py <./Inputs/$n-$e-$p-$l-random.txt
-	fi
+	time python3 Code/ga_msp.py <./Inputs/$n-$e-$p-$l-$rand.txt
 
 	echo "Genetic2-Ronak-------------------------";
-	if [ $rand -eq 0 ]
-	then
-		time python Code/Machine.py <./Inputs/$n-$e-$p-$l.txt
-	else
-		time python Code/Machine.py <./Inputs/$n-$e-$p-$l-random.txt
-	fi
+	time python Code/Machine.py <./Inputs/$n-$e-$p-$l-$rand.txt
 
 	echo "Random & Topologically sorted----------------------------";
-	if [ $rand -eq 0 ]
-	then
-		time python3 Code/ListShd_p.py <./Inputs/$n-$e-$p-$l.txt
-	else
-		time python3 Code/ListShd_p.py <./Inputs/$n-$e-$p-$l-random.txt
-	fi
+	time python3 Code/ListShd_p.py <./Inputs/$n-$e-$p-$l-$rand.txt
 
 	echo "Swap search---------------------------";
-	if [ $rand -eq 0 ]
-	then
-		time python Code/ListShd.py <./Inputs/$n-$e-$p-$l.txt
-	else
-		time python Code/ListShd.py <./Inputs/$n-$e-$p-$l-random.txt
-	fi
+	time python Code/ListShd.py <./Inputs/$n-$e-$p-$l-$rand.txt
 
-	if [ $rand -eq 0 ]
-	then
-		rm ./Inputs/$n-$e-$p-$l.txt
-	else
-		rm ./Inputs/$n-$e-$p-$l-random.txt
-	fi
+	rm ./Inputs/$n-$e-$p-$l-$rand.txt
 
 done;
 done;
 done;
 done;
-	rm generate gen_dot
+	rm generate$s gen_dot$s
