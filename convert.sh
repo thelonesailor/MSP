@@ -16,17 +16,17 @@ echo $outfolder;
 for x in {0..9};
 do
 	java Convert $p <./$infolder/rand000$x.stg >./$outfolder/in$x.txt
-	echo $x
+	# echo $x
 done;
 for x in {10..99};
 do
 	java Convert $p <./$infolder/rand00$x.stg >./$outfolder/in$x.txt
-	echo $x
+	# echo $x
 done;
 for x in {100..179};
 do
 	java Convert $p <./$infolder/rand0$x.stg >./$outfolder/in$x.txt
-	echo $x
+	# echo $x
 done;
 done;
 done;
