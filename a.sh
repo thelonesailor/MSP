@@ -19,3 +19,22 @@ do
 	echo "-----------------------------------------------" >> $ffile;
 
 done;
+
+for inf in {"Rand100","Rgpos100"}
+do
+for p in {2..10}
+do
+	infolder="$inf$p"
+	echo "$inf"_"$p" >>$ffile;
+	f2name=./Result_files/genetic1/"$infolder"_gp.csv
+	f3name=./Result_files/genetic2/"$infolder"_gr.csv
+	f4name=./Result_files/randtop/"$infolder"_rtop.csv
+	f5name=./Result_files/swapsearch/"$infolder"_ss.csv
+
+	python3 Code/analyze2.py $f2name $f3name $f4name $f5name >>$ffile
+
+
+	echo "-----------------------------------------------" >> $ffile;
+
+done;
+done;
