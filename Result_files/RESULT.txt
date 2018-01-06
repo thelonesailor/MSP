@@ -1,64 +1,208 @@
 Case50_2
-prakhargenetic=   0.85%
-ronakgenetic=     0.55%
-bestrandomls=     0.47%
-worstrandomls=    12.39%
+prakhargenetic=   0.97%
+ronakgenetic=     0.49%
+bestrandomls=     0.46%
+worstrandomls=    12.42%
 topologicalls=    2.13%
-swapsearch=       0.49%
+swapsearch=       0.46%
 -----------------------------------------------
 Case50_4
-prakhargenetic=   6.99%
-ronakgenetic=     7.9%
-bestrandomls=     1.16%
-worstrandomls=    24.29%
-topologicalls=    5.0%
-swapsearch=       1.03%
+prakhargenetic=   9.21%
+ronakgenetic=     5.33%
+bestrandomls=     1.14%
+worstrandomls=    24.09%
+topologicalls=    5.06%
+swapsearch=       1.07%
 -----------------------------------------------
 Case50_8
-prakhargenetic=   16.55%
-ronakgenetic=     23.83%
-bestrandomls=     1.42%
-worstrandomls=    19.18%
-topologicalls=    3.35%
-swapsearch=       1.52%
+prakhargenetic=   15.85%
+ronakgenetic=     18.41%
+bestrandomls=     1.41%
+worstrandomls=    19.14%
+topologicalls=    3.36%
+swapsearch=       1.58%
 -----------------------------------------------
 Case50_16
-prakhargenetic=   15.53%
-ronakgenetic=     18.83%
+prakhargenetic=   14.29%
+ronakgenetic=     15.69%
 bestrandomls=     0.0%
-worstrandomls=    1.77%
-topologicalls=    0.02%
+worstrandomls=    1.74%
+topologicalls=    0.03%
 swapsearch=       0.0%
 -----------------------------------------------
 Case100_2
-prakhargenetic=   1.18%
-ronakgenetic=     0.71%
-bestrandomls=     0.55%
-worstrandomls=    9.98%
+prakhargenetic=   1.64%
+ronakgenetic=     0.7%
+bestrandomls=     0.57%
+worstrandomls=    9.92%
 topologicalls=    2.18%
-swapsearch=       0.41%
+swapsearch=       0.44%
 -----------------------------------------------
 Case100_4
-prakhargenetic=   10.92%
-ronakgenetic=     10.53%
-bestrandomls=     0.84%
-worstrandomls=    18.01%
+prakhargenetic=   13.8%
+ronakgenetic=     7.06%
+bestrandomls=     0.83%
+worstrandomls=    17.9%
 topologicalls=    3.74%
-swapsearch=       0.55%
+swapsearch=       0.53%
 -----------------------------------------------
 Case100_8
-prakhargenetic=   28.83%
-ronakgenetic=     32.34%
-bestrandomls=     1.17%
-worstrandomls=    16.74%
-topologicalls=    3.17%
-swapsearch=       0.86%
+prakhargenetic=   32.31%
+ronakgenetic=     25.52%
+bestrandomls=     1.1%
+worstrandomls=    16.89%
+topologicalls=    3.14%
+swapsearch=       0.89%
 -----------------------------------------------
 Case100_16
-prakhargenetic=   28.98%
-ronakgenetic=     30.01%
-bestrandomls=     0.25%
-worstrandomls=    3.42%
+prakhargenetic=   33.11%
+ronakgenetic=     22.99%
+bestrandomls=     0.28%
+worstrandomls=    3.36%
 topologicalls=    0.53%
-swapsearch=       0.22%
+swapsearch=       0.21%
+-----------------------------------------------
+Rand100_2
+prakhargenetic=   -1.42%
+ronakgenetic=     0.0%
+bestrandomls=     -14.23%
+worstrandomls=    -7.53%
+topologicalls=    -11.52%
+swapsearch=       -14.38%
+-----------------------------------------------
+Rand100_3
+prakhargenetic=   -5.45%
+ronakgenetic=     0.0%
+bestrandomls=     -16.35%
+worstrandomls=    -14.34%
+topologicalls=    -15.7%
+swapsearch=       -16.34%
+-----------------------------------------------
+Rand100_4
+prakhargenetic=   -0.38%
+ronakgenetic=     0.0%
+bestrandomls=     -19.86%
+worstrandomls=    -16.91%
+topologicalls=    -19.13%
+swapsearch=       -20.39%
+-----------------------------------------------
+Rand100_5
+prakhargenetic=   1.66%
+ronakgenetic=     0.0%
+bestrandomls=     -17.26%
+worstrandomls=    -14.71%
+topologicalls=    -16.75%
+swapsearch=       -18.52%
+-----------------------------------------------
+Rand100_6
+prakhargenetic=   0.2%
+ronakgenetic=     0.0%
+bestrandomls=     -13.07%
+worstrandomls=    -12.39%
+topologicalls=    -13.02%
+swapsearch=       -18.56%
+-----------------------------------------------
+Rand100_7
+prakhargenetic=   4.2%
+ronakgenetic=     0.0%
+bestrandomls=     -16.55%
+worstrandomls=    -14.63%
+topologicalls=    -16.14%
+swapsearch=       -22.05%
+-----------------------------------------------
+Rand100_8
+prakhargenetic=   0.79%
+ronakgenetic=     0.0%
+bestrandomls=     -14.98%
+worstrandomls=    -14.06%
+topologicalls=    -14.91%
+swapsearch=       -16.45%
+-----------------------------------------------
+Rand100_9
+prakhargenetic=   2.79%
+ronakgenetic=     0.0%
+bestrandomls=     -20.17%
+worstrandomls=    -17.55%
+topologicalls=    -19.71%
+swapsearch=       -24.9%
+-----------------------------------------------
+Rand100_10
+prakhargenetic=   5.5%
+ronakgenetic=     0.0%
+bestrandomls=     -7.87%
+worstrandomls=    -7.81%
+topologicalls=    -7.87%
+swapsearch=       -22.2%
+-----------------------------------------------
+Rgpos100_2
+prakhargenetic=   13.16%
+ronakgenetic=     0.0%
+bestrandomls=     -22.5%
+worstrandomls=    16.04%
+topologicalls=    -22.49%
+swapsearch=       -22.5%
+-----------------------------------------------
+Rgpos100_3
+prakhargenetic=   12.13%
+ronakgenetic=     0.0%
+bestrandomls=     -26.1%
+worstrandomls=    22.25%
+topologicalls=    -22.03%
+swapsearch=       -26.03%
+-----------------------------------------------
+Rgpos100_4
+prakhargenetic=   39.03%
+ronakgenetic=     0.0%
+bestrandomls=     -34.18%
+worstrandomls=    12.06%
+topologicalls=    -33.34%
+swapsearch=       -34.22%
+-----------------------------------------------
+Rgpos100_5
+prakhargenetic=   35.41%
+ronakgenetic=     0.0%
+bestrandomls=     -37.18%
+worstrandomls=    11.01%
+topologicalls=    -37.18%
+swapsearch=       -37.2%
+-----------------------------------------------
+Rgpos100_6
+prakhargenetic=   29.28%
+ronakgenetic=     0.0%
+bestrandomls=     -44.74%
+worstrandomls=    -5.58%
+topologicalls=    -41.53%
+swapsearch=       -45.39%
+-----------------------------------------------
+Rgpos100_7
+prakhargenetic=   22.48%
+ronakgenetic=     0.0%
+bestrandomls=     -48.82%
+worstrandomls=    -8.52%
+topologicalls=    -48.91%
+swapsearch=       -49.19%
+-----------------------------------------------
+Rgpos100_8
+prakhargenetic=   15.04%
+ronakgenetic=     0.0%
+bestrandomls=     -54.02%
+worstrandomls=    -21.75%
+topologicalls=    -49.65%
+swapsearch=       -55.1%
+-----------------------------------------------
+Rgpos100_9
+prakhargenetic=   43.25%
+ronakgenetic=     0.0%
+bestrandomls=     -56.4%
+worstrandomls=    -24.96%
+topologicalls=    -50.82%
+swapsearch=       -57.64%
+-----------------------------------------------
+Rgpos100_10
+prakhargenetic=   24.94%
+ronakgenetic=     0.0%
+bestrandomls=     -59.1%
+worstrandomls=    -31.82%
+topologicalls=    -52.47%
+swapsearch=       -60.47%
 -----------------------------------------------
