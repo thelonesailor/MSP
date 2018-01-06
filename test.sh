@@ -12,6 +12,7 @@ time ./convert.sh &
 time ./eold.sh 0 &
 time ./eold.sh 1 &
 time ./eold.sh 2 &
+time ./e.sh 0 0 2 &
 wait
 rm -rf Result_test
 
@@ -20,4 +21,5 @@ rm -rf Result_test
 # time ./e2.sh 91527 179 &
 # time ./e3.sh 91527 179 &
 # time ./e4.sh 91527 179 &
+# time ./e.sh 91527 14 10 &
 # wait
