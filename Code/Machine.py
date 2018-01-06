@@ -1,12 +1,14 @@
 import sys,random,bisect
 from heapq import heappush,heappop
+import time as timer
 cin = sys.stdin
 cout = sys.stdout
+exec_time = 30
 def cal_height(graph):
 	n = len(graph[0])
 	ht = [-1 for i in xrange(n)]
 	child = graph[0]
-	parent = graph[1]	
+	parent = graph[1]
 	for i in xrange(n):
 		if ht[i]==-1:
 			S = [i]
@@ -31,7 +33,7 @@ def search_task(schedule,task):
 		for j in xrange(len(schedule[i])):
 			if schedule[i][j]==task:
 				return i,j
-	print "Searching for the wrong task in the schedule"
+	assert False
 	return 0,0
 
 def finish_time(graph,schedule,time):
@@ -42,8 +44,7 @@ def finish_time(graph,schedule,time):
 		for j in xrange(len(schedule[i])) :
 			pos[schedule[i][j]]=(i,j)
 	for elem in pos :
-		if elem==(-1,-1):
-			print "Repeat Error"			
+		assert elem!=(-1,-1)
 	time_tasks = [-1]*n
 	for i in xrange(n):
 		if time_tasks[i]==-1:
@@ -52,7 +53,7 @@ def finish_time(graph,schedule,time):
 			while S :
 				task = S[-1]
 				x,y = pos[task]
-				ptask = schedule[x][y-1] if y else -1 		
+				ptask = schedule[x][y-1] if y else -1
 				if time_tasks[task]!=-1:
 					S.pop()
 					min_par = max([time_tasks[par] for par in parent[task]] or [0])
@@ -127,7 +128,7 @@ def pop_schedule(schedules):
 
 def print_Schedules(schedules,ftime):
 	for ith,schedule in enumerate(schedules) :
-		print "Finish Time of",ith,"Schedule:",ftime[ith]	
+		print "Finish Time of",ith,"Schedule:",ftime[ith]
 		for j,processor in enumerate(schedule):
 			print "Processor",j,":",[elem+1 for elem in processor]
 	print "\n\n"
@@ -135,12 +136,10 @@ def print_Schedules(schedules,ftime):
 def sanity_check(schedules,height):
 	for schedule in schedules:
 		sm = sum(len(processor) for processor in schedule)
-		if sm!=len(height):
-			print "Net tasks not preserved"
+		assert sm==len(height)
 		for processor in schedule:
 			for i in xrange(len(processor)-1):
-				if height[processor[i]]>height[processor[i+1]]:
-					print "Height Ordering Not followed"
+				assert height[processor[i]]<=height[processor[i+1]]
 
 def find_schedule(graph,num_proc,time,pop_size,num_iterations):
 	#print time
@@ -151,7 +150,11 @@ def find_schedule(graph,num_proc,time,pop_size,num_iterations):
 	schedules = [generate_schedule(tasksets,num_proc,num_tasks) for i in xrange(pop_size)]
 	iterations = 0
 	ftime = [finish_time(graph,schedule,time) for schedule in schedules]
-	while iterations!=num_iterations:
+	stime = timer.time()
+	while 1: #iterations!=num_iterations:
+		etime = timer.time()
+		if((etime-stime)>(exec_time)):
+			break
 		sanity_check(schedules,height)
 		maxtime,mintime = max(ftime),min(ftime)
 		fit_val = [(maxtime-times)+1 for times in ftime]
@@ -179,7 +182,7 @@ def find_schedule(graph,num_proc,time,pop_size,num_iterations):
 
 	# print best_time
 	cout.write(str(best_time)+"\n")
-	# fd=open("result.txt",'a')	
+	# fd=open("result.txt",'a')
 	# fd.write(str(best_time)+",")
 	# fd.close()
 	# print best_shd
@@ -195,4 +198,4 @@ for i in xrange(num_edges):
 	a,b = map(int,cin.readline().split(' '))
 	graph[0][a].append(b)
 	graph[1][b].append(a)
-find_schedule(graph,num_proc,time,500,100)
+find_schedule(graph,num_proc,time,1000,100)

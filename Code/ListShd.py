@@ -2,6 +2,10 @@ import sys,random
 from heapq import heappush,heappop,heapify
 cin = sys.stdin
 cout = sys.stdout
+num_tasks,num_edges,num_proc = map(int,cin.readline().split(' '))
+time = map(int,cin.readline().split(' '))
+graph = [[] for i in xrange(num_tasks)],[[] for i in xrange(num_tasks)]
+
 def evaluate(graph,p,time,priority_order):
 	schedule = [[] for i in xrange(p)]
 	child,parent = graph
@@ -12,7 +16,7 @@ def evaluate(graph,p,time,priority_order):
 	# ls = [elem[1] for elem in ls]
 	done = [0]*n
 	end_time = [-1]*n
-	donect=0 
+	donect=0
 	heap = [(0,i) for i in xrange(p)]
 	heapify(heap)
 	while donect<n :
@@ -45,8 +49,8 @@ def evaluate(graph,p,time,priority_order):
 			while tmp:
 				heappush(heap,(new_time,(tmp.pop())[1]))
 	mtime = max(elem[0] for elem in heap)
-	sanity_check(schedule,num_tasks)
-	return mtime
+	# sanity_check(schedule,num_tasks)
+	return mtime,schedule
 
 def finish_time(graph,schedule,time):
 	n = len(graph[0])
@@ -56,8 +60,8 @@ def finish_time(graph,schedule,time):
 		for j in xrange(len(schedule[i])) :
 			pos[schedule[i][j]]=(i,j)
 	for elem in pos :
-		if elem==(-1,-1):
-			print "Repeat Error"			
+		assert elem!=(-1,-1)
+
 	time_tasks = [-1]*n
 	for i in xrange(n):
 		if time_tasks[i]==-1:
@@ -66,7 +70,7 @@ def finish_time(graph,schedule,time):
 			while S :
 				task = S[-1]
 				x,y = pos[task]
-				ptask = schedule[x][y-1] if y else -1 		
+				ptask = schedule[x][y-1] if y else -1
 				if time_tasks[task]!=-1:
 					S.pop()
 					min_par = max([time_tasks[par] for par in parent[task]] or [0])
@@ -89,32 +93,43 @@ def swap(ls):
 	newls[i],newls[j] = newls[j],newls[i]
 	return newls
 
-def sanity_check(schedule,num_tasks):
+def sanity_check(schedule,num_tasks,res_time):
 	sm = sum(len(processor) for processor in schedule)
-	if sm!=num_tasks:
-		print "Net tasks not preserved"
+	assert sm==num_tasks
+	pos = [(-1,-1) for i in xrange(num_tasks)]
+	for i in xrange(len(schedule)) :
+		for j in xrange(len(schedule[i])) :
+			pos[schedule[i][j]]=(i,j)
+	for elem in pos :
+		assert elem!=(-1,-1)
+	for proc in schedule:
+		for i in xrange(0,len(proc)):
+			task = proc[i]
+			pari = graph[1][task]
+			for j in xrange(i+1,len(proc)):
+				task2 = proc[j]
+				assert task2 not in pari
+	assert finish_time(graph,schedule,time)==res_time
 
-num_tasks,num_edges,num_proc = map(int,cin.readline().split(' '))
-time = map(int,cin.readline().split(' '))
-graph = [[] for i in xrange(num_tasks)],[[] for i in xrange(num_tasks)]
 for i in xrange(num_edges):
 	a,b = map(int,cin.readline().split(' '))
 	graph[0][a].append(b)
 	graph[1][b].append(a)
 priority_order = [i for i in xrange(0,num_tasks)]
 unstable=1
-result = evaluate(graph,num_proc,time,priority_order)
+result,bst_sch = evaluate(graph,num_proc,time,priority_order)
 ct=40*num_tasks
 while unstable:
 	if not ct:
 		unstable=0
 		break
 	newls = swap(priority_order)
-	new_res = evaluate(graph,num_proc,time,newls)
+	new_res,cand_shd = evaluate(graph,num_proc,time,newls)
 	if new_res<result:
 		result=new_res
 		priority_order=newls
+		bst_sch = cand_shd
 	else:
 		ct-=1
+sanity_check(bst_sch,num_tasks,result)
 print result
-

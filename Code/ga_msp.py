@@ -2,11 +2,13 @@ from random import randint,shuffle
 import sys
 from sys import stdin, stdout
 from heapq import heappush,heappop
+import time as timer
 
-N = 500  # population size, assumed even
+N = 1000  # population size, assumed even
 maxiterations = 100
 prob_crossover = 1.0
 prob_mutation = 0.05
+exec_time = 30
 cmax = 0
 maxheight=0
 beststring=[]
@@ -80,8 +82,11 @@ def find_schedule():
 	fmin=0
 	bs=1000000000
 	bbs=[]
-	for i in range(0,maxiterations):
-
+	stime = timer.time()
+	while 1:
+		etime = timer.time()
+		if((etime-stime)>exec_time):
+			break
 		ft=[]
 		# assert N==len(pop)
 		fmin=1000000000

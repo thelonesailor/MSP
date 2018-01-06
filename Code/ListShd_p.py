@@ -61,8 +61,8 @@ def finish_time(graph,schedule,time):
 		for j in range(len(schedule[i])) :
 			pos[schedule[i][j]]=(i,j)
 	for elem in pos :
-		if elem==(-1,-1):
-			print ("Repeat Error")
+		assert elem!=(-1,-1)
+
 	time_tasks = [-1]*n
 	for i in range(n):
 		if time_tasks[i]==-1:
@@ -86,10 +86,25 @@ def finish_time(graph,schedule,time):
 							S.append(par)
 	return max(time_tasks)
 
-def sanity_check(schedule,num_tasks):
+def sanity_check(schedule,num_tasks,res_time):
 	sm = sum(len(processor) for processor in schedule)
-	if sm!=num_tasks:
-		print ("Net tasks not preserved")
+	assert sm==num_tasks
+	pos = [(-1,-1) for i in range(num_tasks)]
+	for i in range(len(schedule)) :
+		for j in range(len(schedule[i])) :
+			pos[schedule[i][j]]=(i,j)
+	for elem in pos :
+		assert elem!=(-1,-1)
+	for proc in schedule:
+		for i in range(0,len(proc)):
+			task = proc[i]
+			pari = pred[task]
+			for j in range(i+1,len(proc)):
+				task2 = proc[j]
+				assert task2 not in pari
+	assert finish_time(graph,schedule,time)==res_time
+
+
 
 
 num_tasks,num_edges,num_proc, = map(int,cin.readline().split(' '))
@@ -202,6 +217,9 @@ for i in range(lim):
 		worsttime=result[1]
 		worstschedule=schedule
 
+sanity_check(bestschedule,num_tasks,besttime)
+sanity_check(worstschedule,num_tasks,worsttime)
+
 # print("Result of random permutations:")
 # for proc in bestschedule:
 # 	print [task for task in proc]
@@ -287,7 +305,7 @@ for num in range(lim):
 	# 	print [task for task in proc]
 	# assert finish_time(graph,schedule,time)==result[1]
 
-
+sanity_check(bs,num_tasks,bt)
 # print ("Result of Topological sorts:")
 # for proc in bs:
 # 	print ([task for task in proc])
