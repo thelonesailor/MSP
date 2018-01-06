@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 ss=0
 echo "Running for 0..$2";

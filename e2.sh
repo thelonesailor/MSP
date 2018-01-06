@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 geneticr=0
 echo "Running for 0..$2";
@@ -9,7 +10,7 @@ do
 	then
 		fname=./Result_files/genetic2/"$infolder"_gr.csv
 	else
-		fname=./Result_test/genetic2/"$infolder"_gp.csv
+		fname=./Result_test/genetic2/"$infolder"_gr.csv
 	fi
 
 	infolder=Inputs/$infolder
